@@ -1,23 +1,23 @@
-import React from 'react'
+import React, { useState } from 'react'
 import CusBtn from './Components/Button/CusBtn'
-import { useDispatch, useSelector } from 'react-redux'
-import { add, dec } from './Redux/counterSlice'
+
+
+import { CountContext } from './context/CountContext'
+import ReduxCounter from './Components/redux/ReduxCounter'
+import ContextCounter from './Components/ContextCounter/ContextCounter'
 
 function App() {
-  const dispatch = useDispatch()
-  const count = useSelector((state) => state.counter.value)
+  const [val, setVal] = useState(0)
+
   return (
-    <div className='bg-[#0f0f0f] h-screen flex flex-col justify-center items-center gap-10'>
-      <h1 className='text-2xl text-white font-semibold'>Count {count}</h1>
-      <div className='flex gap-10'>
-        <CusBtn lable={"Decrement"} onclick={() => {
-          dispatch(dec())
-        }} />
-        <CusBtn lable={"Increment"} onclick={() => {
-          dispatch(add())
-        }} />
+    <CountContext.Provider value={{ val, setVal }} >
+
+
+      <div className='bg-[#0f0f0f] h-screen flex flex-col justify-center items-center gap-10'>
+        <ReduxCounter />
+        <ContextCounter />
       </div>
-    </div>
+    </CountContext.Provider>
   )
 }
 
